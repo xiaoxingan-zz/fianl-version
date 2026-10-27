@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="陈奕安的个人主页：来自上海，学习数据分析与后端开发，喜欢钢琴、篮球、游戏和动漫。">
+  <title>陈奕安｜个人主页</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231c2733'/%3E%3Ctext x='32' y='43' font-family='serif' font-size='26' fill='%23f7f5ef' text-anchor='middle'%3ECY%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #f7f5ef;
+      --card: #ffffff;
+      --ink: #1c2733;
+      --muted: #68747e;
+      --line: #dfe5e9;
+      --blue: #2f5d7c;
+      --blue-soft: #e8f0f5;
+      --red: #b33a2b;
+      --red-soft: #f7e8e4;
+      --serif: "Noto Serif SC", "Songti SC", "STSong", serif;
+      --sans: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      --mono: "Consolas", monospace;
+      --page: min(1080px, calc(100% - 48px));
+      --radius: 14px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 78px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, p, dl, dd { margin: 0; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+    svg { display: block; max-width: 100%; }
+    ::selection { color: #fff; background: var(--red); }
+    :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+    .shell { width: var(--page); margin-inline: auto; }
+
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 200;
+      padding: 10px 14px;
+      color: #fff;
+      background: var(--ink);
+      font-size: 12px;
+      transform: translateY(-150%);
+      transition: transform 0.2s ease;
+    }
+    .skip-link:focus { transform: none; }
+
+    /* header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247, 245, 239, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      width: var(--page);
+      height: 68px;
+      margin-inline: auto;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .brand-mark {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--ink);
+      font-size: 12px;
+      letter-spacing: 0;
+      place-items: center;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-left: auto;
+      font-size: 13px;
+    }
+    .nav a {
+      position: relative;
+      padding: 7px 0;
+      color: var(--muted);
+      transition: color 0.2s ease;
+    }
+    .nav a::after {
+      position: absolute;
+      right: 0;
+      bottom: 1px;
+      left: 0;
+      height: 1px;
+      content: "";
+      background: var(--ink);
+      transform: scaleX(0);
+      transform-origin: right center;
+      transition: transform 0.25s var(--ease);
+    }
+    .nav a:hover, .nav a[aria-current="true"] { color: var(--ink); }
+    .nav a:hover::after, .nav a[aria-current="true"]::after { transform: scaleX(1); transform-origin: left center; }
+    .menu-btn {
+      display: none;
+      width: 38px;
+      height: 38px;
+      margin-left: auto;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      place-items: center;
+    }
+    .menu-btn span { display: block; width: 15px; height: 1px; background: var(--ink); margin: 3px 0; transition: transform 0.2s ease; }
+    body.menu-open .menu-btn span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
+    body.menu-open .menu-btn span:nth-child(2) { transform: translateY(-4px) rotate(-45deg); }
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 68px;
+      right: 0;
+      left: 0;
+      z-index: 90;
+      padding: 14px 24px 22px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+    }
+    .mobile-nav[hidden] { display: none; }
+    .mobile-nav a {
+      display: block;
+      padding: 12px 0;
+      color: var(--ink);
+      font-size: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+    body.menu-open { overflow: hidden; }
+
+    /* shared */
+    .section { padding: 72px 0; }
+    .section-kicker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .section-kicker span:first-child {
+      display: grid;
+      width: 23px;
+      height: 23px;
+      color: var(--bg);
+      background: var(--ink);
+      font-size: 8px;
+      letter-spacing: 0;
+      place-items: center;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 2.7rem);
+      font-weight: 500;
+      line-height: 1.25;
+      letter-spacing: -0.04em;
+    }
+    .section-note {
+      max-width: 620px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .reveal { transition: opacity 0.6s ease, transform 0.6s var(--ease); }
+    .js .reveal { opacity: 0; transform: translateY(14px); }
+    .js .reveal.is-visible { opacity: 1; transform: none; }
+
+    /* hero */
+    .hero { padding: 64px 0 58px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+      gap: 52px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .eyebrow i { width: 6px; height: 6px; background: var(--red); border-radius: 50%; }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 6vw, 4.8rem);
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: -0.06em;
+    }
+    .hero h1 em { color: var(--blue); font-style: normal; }
+    .hero-lead {
+      max-width: 570px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.9;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 22px;
+    }
+    .hero-tags span {
+      padding: 5px 9px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      font-size: 11px;
+      border-radius: 4px;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 18px;
+      font-size: 13px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .button-primary { color: #fff; background: var(--blue); border-color: var(--blue); }
+    .button-primary:hover { background: #234b66; border-color: #234b66; }
+    .button:hover { border-color: var(--blue); }
+    .profile-card {
+      padding: 26px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 32px rgba(28, 39, 51, 0.06);
+    }
+    .avatar {
+      display: grid;
+      width: 70px;
+      height: 70px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      border-radius: 50%;
+      font-family: var(--serif);
+      font-size: 30px;
+      place-items: center;
+    }
+    .profile-card h2 {
+      margin-top: 16px;
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+    }
+    .profile-card > p { margin-top: 3px; color: var(--muted); font-size: 12px; }
+    .profile-facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 20px;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+    .profile-facts div {
+      padding: 10px 11px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .profile-facts dt { color: var(--muted); font-size: 10px; }
+    .profile-facts dd { margin-top: 2px; font-size: 12px; }
+
+    /* about */
+    .about-card {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+      margin-top: 26px;
+      padding: 30px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .about-card p { color: var(--muted); font-size: 14px; line-height: 1.95; }
+    .about-card p + p { margin-top: 12px; }
+    .about-side {
+      padding-left: 28px;
+      border-left: 1px solid var(--line);
+    }
+    .about-side h3 { font-family: var(--serif); font-size: 17px; font-weight: 500; }
+    .about-side ul { margin: 12px 0 0; padding: 0; list-style: none; }
+    .about-side li { padding: 8px 0; color: var(--muted); font-size: 13px; border-bottom: 1px solid var(--line); }
+    .about-side li strong { color: var(--ink); font-weight: 500; }
+
+    /* hobbies */
+    .hobby-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 26px;
+    }
+    .hobby-card {
+      padding: 22px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      transition: border-color 0.2s ease, transform 0.2s var(--ease);
+    }
+    .hobby-card:hover { border-color: #b9c8d2; transform: translateY(-2px); }
+    .hobby-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .hobby-icon {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      border-radius: 8px;
+      place-items: center;
+    }
+    .hobby-icon svg { width: 20px; height: 20px; }
+    .hobby-no { color: var(--muted); font-family: var(--mono); font-size: 9px; }
+    .hobby-card h3 { margin-top: 15px; font-family: var(--serif); font-size: 20px; font-weight: 500; }
+    .hobby-card p { margin-top: 5px; color: var(--muted); font-size: 12.5px; line-height: 1.8; }
+    .hobby-card.has-photo {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 170px;
+      gap: 16px;
+      align-items: center;
+    }
+    .hobby-copy { min-width: 0; }
+    .hobby-photo { margin: 0; }
+    .hobby-photo img {
+      width: 100%;
+      height: 112px;
+      object-fit: cover;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #e9eef2;
+    }
+    .hobby-photo figcaption {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.4;
+    }
+    .hobby-card a {
+      display: inline-block;
+      margin-top: 10px;
+      color: var(--blue);
+      font-size: 12px;
+      border-bottom: 1px solid var(--blue);
+    }
+    .hobby-card a:hover { color: var(--red); border-color: var(--red); }
+    .hobby-anime { border-left: 3px solid var(--red); }
+    .hobby-anime .hobby-icon { color: var(--red); background: var(--red-soft); }
+
+    /* anime */
+    .anime-panel {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 32px;
+      margin-top: 26px;
+      padding: 34px;
+      overflow: hidden;
+      color: #f6f0e4;
+      background: #1b2026;
+      border-radius: var(--radius);
+    }
+    .anime-panel::after {
+      position: absolute;
+      right: -40px;
+      bottom: -70px;
+      width: 260px;
+      height: 260px;
+      content: "";
+      border: 1px solid rgba(246, 240, 228, 0.16);
+      border-radius: 50%;
+      box-shadow: 0 0 0 34px rgba(246, 240, 228, 0.035), 0 0 0 68px rgba(246, 240, 228, 0.02);
+    }
+    .anime-copy { position: relative; z-index: 1; }
+    .anime-label {
+      color: #e08574;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .anime-panel h2 {
+      margin-top: 12px;
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      font-weight: 500;
+      line-height: 1.18;
+      letter-spacing: -0.04em;
+    }
+    .anime-panel h2 em { color: #e08574; font-style: normal; }
+    .anime-panel p {
+      max-width: 520px;
+      margin-top: 14px;
+      color: rgba(246, 240, 228, 0.76);
+      font-size: 13.5px;
+      line-height: 1.9;
+    }
+    .anime-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+    .anime-tags span {
+      padding: 4px 8px;
+      color: rgba(246, 240, 228, 0.8);
+      font-size: 10px;
+      border: 1px solid rgba(246, 240, 228, 0.22);
+    }
+    .anime-art {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+    }
+    .anime-art .shinjuku {
+      position: relative;
+      z-index: 2;
+      color: #f6f0e4;
+      font-family: var(--serif);
+      font-size: clamp(3.2rem, 6vw, 5rem);
+      line-height: 1.05;
+      letter-spacing: -0.08em;
+      text-align: center;
+      writing-mode: horizontal-tb;
+    }
+    .anime-art .slash {
+      position: absolute;
+      width: 240px;
+      height: 2px;
+      background: #b33a2b;
+      transform: rotate(-38deg);
+      box-shadow: 0 18px 0 rgba(179, 58, 43, 0.45), 0 -18px 0 rgba(246, 240, 228, 0.12);
+    }
+    .anime-art .domain {
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      border: 1px solid rgba(246, 240, 228, 0.18);
+      border-radius: 50%;
+    }
+
+    /* footer */
+    .site-footer {
+      padding: 26px 0 34px;
+      border-top: 1px solid var(--line);
+    }
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.04em;
+    }
+    .footer-inner a { color: var(--ink); border-bottom: 1px solid var(--line); }
+    .to-top {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 80;
+      display: grid;
+      width: 38px;
+      height: 38px;
+      color: var(--bg);
+      background: var(--ink);
+      border-radius: 50%;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      place-items: center;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .to-top.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+    .to-top svg { width: 13px; height: 13px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .js .reveal { opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 860px) {
+      .nav { display: none; }
+      .menu-btn { display: grid; }
+      .mobile-nav { display: block; }
+      .hero-grid { grid-template-columns: 1fr; gap: 30px; }
+      .profile-card { max-width: 420px; }
+      .about-card { grid-template-columns: 1fr; gap: 22px; }
+      .about-side { padding: 20px 0 0; border-top: 1px solid var(--line); border-left: 0; }
+      .anime-panel { grid-template-columns: 1fr; }
+      .hobby-card.has-photo { grid-template-columns: minmax(0, 1fr) 140px; gap: 12px; }
+      .hobby-photo img { height: 96px; }
+      .anime-art { min-height: 170px; justify-content: flex-start; padding-left: 40px; }
+      .anime-art .shinjuku { writing-mode: horizontal-tb; font-size: 3.4rem; }
+      .anime-art .slash { width: 220px; }
+    }
+    @media (max-width: 640px) {
+      :root { --page: calc(100% - 32px); }
+      body { font-size: 15px; }
+      .section { padding: 52px 0; }
+      .hero { padding: 42px 0 44px; }
+      .hero h1 { font-size: clamp(2.8rem, 14vw, 4rem); }
+      .hero-lead { font-size: 14px; }
+      .hobby-grid { grid-template-columns: 1fr; }
+      .hobby-card.has-photo { grid-template-columns: 1fr; }
+      .hobby-photo img { height: 180px; }
+      .about-card, .profile-card, .hobby-card { padding: 20px; }
+      .anime-panel { padding: 24px; }
+      .anime-panel h2 { font-size: 2rem; }
+      .anime-art { padding-left: 10px; }
+      .anime-art .shinjuku { font-size: 3rem; }
+      .anime-art .slash { width: 170px; }
+      .anime-art .domain { width: 140px; height: 140px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#home" aria-label="陈奕安，回到首页">
+        <span class="brand-mark" aria-hidden="true">CY</span>
+        <span>陈奕安</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="#home">首页</a>
+        <a href="#about">关于我</a>
+        <a href="#hobbies">爱好</a>
+      </nav>
+      <button class="menu-btn" id="menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="mobile-nav">
+        <span aria-hidden="true"></span><span aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobile-nav" hidden>
+    <a href="#home">首页</a>
+    <a href="#about">关于我</a>
+    <a href="#hobbies">爱好</a>
+  </div>
+
+  <main id="main">
+    <section class="hero" id="home">
+      <div class="shell">
+        <div class="hero-grid">
+          <div class="reveal">
+            <p class="eyebrow"><i aria-hidden="true"></i>Shanghai · Data / Backend</p>
+            <h1>你好，我是<br><em>陈奕安</em>。</h1>
+            <p class="hero-lead">来自上海，正在学习数据分析与后端开发。喜欢在数据里找规律，也喜欢钢琴、篮球、游戏和动漫。</p>
+            <div class="hero-tags">
+              <span>数据分析</span><span>后端开发</span><span>钢琴</span><span>篮球</span>
+            </div>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#about">了解我</a>
+            </div>
+          </div>
+
+          <aside class="profile-card reveal" aria-label="个人信息">
+            <div class="avatar" aria-hidden="true">安</div>
+            <h2>陈奕安</h2>
+            <p>上海 · 学生</p>
+            <dl class="profile-facts">
+              <div><dt>方向</dt><dd>数据分析 / 后端</dd></div>
+              <div><dt>城市</dt><dd>上海</dd></div>
+              <div><dt>爱好</dt><dd>钢琴 · 篮球</dd></div>
+              <div><dt>最近</dt><dd>动漫</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="shell">
+        <div class="reveal">
+          <div class="section-kicker"><span>01</span>About me</div>
+          <h2 class="section-title">关于我</h2>
+        </div>
+        <div class="about-card reveal">
+          <div>
+            <p>我是陈奕安，来自上海。学习方向是从数据中找出规律，进行数据分析，或者做后端开发。我喜欢把复杂的问题拆开，找到其中的结构，再用代码把它跑起来。</p>
+            <p>不写代码的时候，我可能在琴房、球场，或者在泰拉瑞亚和动漫里。它们看起来是不同的事，但都让我保持好奇。</p>
+          </div>
+          <div class="about-side">
+            <h3>现在</h3>
+            <ul>
+              <li><strong>学习</strong> · 数据分析与后端基础</li>
+              <li><strong>练习</strong> · 钢琴与篮球</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="hobbies">
+      <div class="shell">
+        <div class="reveal">
+          <div class="section-kicker"><span>02</span>Hobbies</div>
+          <h2 class="section-title">爱好</h2>
+          <p class="section-note">代码之外，能让我放松下来的几件事。</p>
+        </div>
+        <div class="hobby-grid">
+          <article class="hobby-card has-photo reveal">
+            <div class="hobby-copy">
+              <div class="hobby-top">
+                <span class="hobby-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 19V7l5 2 3-4 3 4 5-2v12l-5-2-3 4-3-4-5 2Z"/><path d="M9 9v8M15 9v8"/></svg>
+                </span>
+                <span class="hobby-no">01 / GAME</span>
+              </div>
+              <h3>泰拉瑞亚</h3>
+              <p>最喜欢的沙盒游戏。挖矿、盖房子、打 Boss，永远有下一张地图可以探索。</p>
+              <a href="https://store.steampowered.com/app/105600/Terraria/" target="_blank" rel="noopener noreferrer">Steam 页面 ↗</a>
+            </div>
+            <figure class="hobby-photo">
+              <img src="assets/terraria-save.jpg" alt="我的泰拉瑞亚存档：夜晚基地、NPC 房间和地下仓库" loading="lazy">
+              <figcaption>我的存档 · 夜晚基地</figcaption>
+            </figure>
+          </article>
+
+          <article class="hobby-card has-photo reveal">
+            <div class="hobby-copy">
+              <div class="hobby-top">
+                <span class="hobby-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 17V7h16v10M7 7v10M10 7v10M14 7v10M17 7v10"/><path d="M7 7v5h3V7M14 7v5h3V7"/></svg>
+                </span>
+                <span class="hobby-no">02 / PIANO</span>
+              </div>
+              <h3>钢琴</h3>
+              <p>比起弹得多快，我更喜欢把一个音弹干净，让句子有呼吸。</p>
+            </div>
+            <figure class="hobby-photo">
+              <img src="assets/piano.jpg" alt="我的钢琴：SAMICK 立式钢琴" loading="lazy">
+              <figcaption>我的钢琴 · SAMICK</figcaption>
+            </figure>
+          </article>
+
+          <article class="hobby-card reveal">
+            <div class="hobby-top">
+              <span class="hobby-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4v16M6.3 6.3c3.4 3 7.9 3 11.4 0M6.3 17.7c3.4-3 7.9-3 11.4 0"/></svg>
+              </span>
+              <span class="hobby-no">03 / BASKETBALL</span>
+            </div>
+            <h3>篮球</h3>
+            <p>周末去球场，把脑子放空。出手、看结果、调整，再投一次。</p>
+          </article>
+
+          <article class="hobby-card hobby-anime reveal">
+            <div class="hobby-top">
+              <span class="hobby-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m8 5 2 5-4 3M16 19l-2-5 4-3M9 12h6"/></svg>
+              </span>
+              <span class="hobby-no">04 / ANIME</span>
+            </div>
+            <h3>动漫</h3>
+            <p>喜欢动漫，最近在看《咒术回战》，新宿决战那段挺喜欢。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <span>© <span id="year">2026</span> 陈奕安 · 上海</span>
+      <span>泰拉瑞亚 · 钢琴 · 篮球 · 动漫 · <a href="#home">回到顶部 ↑</a></span>
+    </div>
+  </footer>
+
+  <button class="to-top" id="to-top" type="button" aria-label="回到顶部">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/></svg>
+  </button>
+
+  <script>
+    (function () {
+      'use strict';
+      var $ = function (s, c) { return (c || document).querySelector(s); };
+      var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var menuToggle = $('#menu-toggle');
+      var mobileNav = $('#mobile-nav');
+      var menuOpen = false;
+      function setMenu(open) {
+        if (!menuToggle || !mobileNav) { return; }
+        menuOpen = open;
+        menuToggle.setAttribute('aria-expanded', String(open));
+        menuToggle.setAttribute('aria-label', open ? '关闭菜单' : '打开菜单');
+        mobileNav.hidden = !open;
+        document.body.classList.toggle('menu-open', open);
+      }
+      if (menuToggle && mobileNav) {
+        menuToggle.addEventListener('click', function () { setMenu(!menuOpen); });
+        $$('a', mobileNav).forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && menuOpen) { setMenu(false); menuToggle.focus(); }
+        });
+      }
+
+      var navLinks = $$('.nav a');
+      var ids = ['about', 'hobbies'];
+      function updateNav() {
+        var y = window.scrollY + window.innerHeight * 0.35;
+        var current = '';
+        ids.forEach(function (id) {
+          var section = document.getElementById(id);
+          if (section && section.offsetTop <= y) { current = id; }
+        });
+        navLinks.forEach(function (a) {
+          if (a.getAttribute('href') === '#' + current) { a.setAttribute('aria-current', 'true'); }
+          else { a.removeAttribute('aria-current'); }
+        });
+        var top = $('#to-top');
+        if (top) { top.classList.toggle('is-visible', window.scrollY > 480); }
+      }
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+      var topBtn = $('#to-top');
+      if (topBtn) { topBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }); }); }
+
+      var revealItems = $$('.reveal');
+      if (!reduceMotion && 'IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
+          });
+        }, { threshold: 0.1 });
+        revealItems.forEach(function (item) { observer.observe(item); });
+      } else {
+        revealItems.forEach(function (item) { item.classList.add('is-visible'); });
+      }
+
+      var year = $('#year');
+      if (year) { year.textContent = String(new Date().getFullYear()); }
+    })();
+  </script>
+</body>
+</html>
